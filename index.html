@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Tool Hub · Maditor</title>
 
     <!-- FAVICON (biểu tượng tab) -->
@@ -527,8 +530,21 @@
         }
     }
 
+    // Chủ động xoá mọi dữ liệu cũ có thể đã bị lưu (localStorage/sessionStorage)
+    // để trang không bao giờ dùng dữ liệu đã lưu trước đó, luôn chỉ dùng data.json.
+    try {
+        localStorage.clear();
+        sessionStorage.clear();
+    } catch (e) {
+        // Một số trình duyệt/chế độ có thể chặn truy cập storage, bỏ qua lỗi này.
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        fetch('data.json', { cache: 'no-store' })
+        // Gắn thêm timestamp để "phá cache" — buộc trình duyệt/CDN của GitHub
+        // Pages phải coi đây là một URL khác mỗi lần tải và luôn lấy bản mới
+        // nhất của data.json, thay vì trả về bản đã lưu trong cache.
+        const cacheBustUrl = `data.json?t=${Date.now()}`;
+        fetch(cacheBustUrl, { cache: 'no-store' })
             .then(res => {
                 if (!res.ok) throw new Error('Không đọc được data.json');
                 return res.json();
