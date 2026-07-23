@@ -7,7 +7,7 @@
     },
     "download": {
       "name": "VisionBox",
-      "url": "https://github.com/Maditor/VisionBox/releases/download/V1.4/VisionBox.V1.4.zip",
+      "url": "https://github.com/Maditor/VisionBox/releases",
       "detail": "https://github.com/Maditor/VisionBox"
     }
   },
@@ -19,7 +19,7 @@
     },
     "download": {
       "name": "TypoCore",
-      "url": "https://github.com/Maditor/TypoCore/releases/download/V1.3.1/TypoCorev1.3.1.Fix.Bug.zip",
+      "url": "https://github.com/Maditor/TypoCore/releases",
       "detail": "https://github.com/Maditor/TypoCore"
     }
   },
@@ -31,7 +31,7 @@
     },
     "download": {
       "name": "TypoVision",
-      "url": "https://github.com/Maditor/TypoVision/releases/download/V1.0/TypoVision.zip",
+      "url": "https://github.com/Maditor/TypoVision/releases",
       "detail": "https://github.com/Maditor/TypoVision"
     }
   }
