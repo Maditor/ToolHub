@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd9e8"/>
+      <stop offset="1" stop-color="#f58aae"/>
+    </linearGradient>
+    <linearGradient id="lid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9fbe"/>
+      <stop offset="1" stop-color="#ef7197"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#302832"/>
+      <stop offset="1" stop-color="#1b1720"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#cfd5dc"/>
+      <stop offset="1" stop-color="#9ca5af"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge -->
+  <circle cx="128" cy="128" r="119" fill="url(#bg)" stroke="#2d1b1b" stroke-width="8"/>
+  <circle cx="128" cy="128" r="105" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="4"/>
+
+  <!-- Sparkles -->
+  <g fill="#fff5e6" stroke="#2d1b1b" stroke-width="5" stroke-linejoin="round">
+    <path d="M128 31 l5 11 11 5-11 5-5 11-5-11-11-5 11-5z"/>
+    <path d="M48 96 l4 9 9 4-9 4-4 9-4-9-9-4 9-4z"/>
+    <path d="M210 96 l4 9 9 4-9 4-4 9-4-9-9-4 9-4z"/>
+  </g>
+
+  <!-- Wrench -->
+  <path d="M67 109
+           C54 102 49 87 55 75
+           C60 65 70 59 81 60
+           L72 71 L78 84 L91 88 L102 79
+           C105 91 99 104 88 110
+           L98 137 L82 143 Z"
+        fill="url(#metal)" stroke="#2d1b1b" stroke-width="7" stroke-linejoin="round"/>
+
+  <!-- Screwdriver -->
+  <path d="M166 105 L184 76 L197 83 L180 114 Z"
+        fill="url(#metal)" stroke="#2d1b1b" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M180 114 L196 89 L208 96 L192 121 Z"
+        fill="#f58aae" stroke="#2d1b1b" stroke-width="7" stroke-linejoin="round"/>
+
+  <!-- Toolbox handle -->
+  <path d="M93 116 V91 Q93 76 108 76 H148 Q163 76 163 91 V116"
+        fill="none" stroke="#2d1b1b" stroke-width="12" stroke-linecap="round"/>
+  <path d="M104 112 V93 Q104 87 110 87 H146 Q152 87 152 93 V112"
+        fill="none" stroke="#514650" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Toolbox body -->
+  <rect x="58" y="108" width="140" height="91" rx="20"
+        fill="url(#box)" stroke="#2d1b1b" stroke-width="8"/>
+
+  <!-- Toolbox lid -->
+  <rect x="51" y="101" width="154" height="49" rx="19"
+        fill="url(#lid)" stroke="#2d1b1b" stroke-width="8"/>
+  <path d="M66 116 Q70 108 83 108 H176"
+        fill="none" stroke="#ffd9e8" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+  <path d="M73 143 H183"
+        stroke="#c9577b" stroke-width="4" opacity=".55"/>
+
+  <!-- Latch -->
+  <rect x="113" y="133" width="30" height="30" rx="8"
+        fill="#fff5e6" stroke="#2d1b1b" stroke-width="7"/>
+  <rect x="119" y="139" width="18" height="18" rx="4"
+        fill="#f4eadf"/>
+
+  <!-- Body highlight -->
+  <path d="M72 168 Q76 185 93 188 H166"
+        fill="none" stroke="#4a4049" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+</svg>
