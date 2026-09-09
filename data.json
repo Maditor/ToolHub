@@ -34,5 +34,17 @@
       "url": "https://github.com/Maditor/TypoVision/releases",
       "detail": "https://github.com/Maditor/TypoVision"
     }
+  },
+    {
+    "web": {
+      "name": "Panelo-Web",
+      "url": "https://maditor.github.io/Panelo-web/",
+      "detail": "https://github.com/Maditor/Panelo-web"
+    },
+    "download": {
+      "name": "Panelo",
+      "url": "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip",
+      "detail": "https://github.com/Maditor/Panelo-Portable"
+    }
   }
 ]
