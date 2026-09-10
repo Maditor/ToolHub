@@ -46,5 +46,32 @@
       "url": "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip",
       "detail": "https://github.com/Maditor/Panelo-Portable"
     }
+  },
+      {
+    "web": {
+      "name": "",
+      "url": "",
+      "detail": ""
+    },
+    "download": {
+      "name": "TypoBlend",
+      "url": "https://github.com/Maditor/TypoBlend/releases",
+      "detail": "https://github.com/Maditor/TypoBlend"
+    }
+  },
+
+        {
+    "web": {
+      "name": "",
+      "url": "",
+      "detail": ""
+    },
+    "download": {
+      "name": "imaFlow",
+      "url": "https://github.com/Maditor/imaFlow/releases/download/v0.1/imaFlow.zip",
+      "detail": "https://github.com/Maditor/imaFlow"
+    }
   }
+
+  
 ]
