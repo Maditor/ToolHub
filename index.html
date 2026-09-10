@@ -41,7 +41,11 @@
 
         /* header */
         .hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;}
-        .hdr h1{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--tx);letter-spacing:.4px;}
+        .hdr h1{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--tx);letter-spacing:.4px;display:flex;align-items:center;gap:7px;}
+        .icon-title{width:22px;height:22px;flex-shrink:0;color:var(--tx);}
+        .icon-col{width:15px;height:15px;flex-shrink:0;vertical-align:-3px;margin-right:3px;color:var(--htx);}
+        .icon-warn{width:16px;height:16px;flex-shrink:0;vertical-align:-3px;margin-right:3px;color:var(--wtx);}
+        .icon-toggle{width:11px;height:11px;color:var(--surf);}
         .hdr-left{display:flex;align-items:center;gap:8px;}
         .htag{font-size:.7rem;font-weight:700;color:var(--mu);border:1px solid var(--bd);border-radius:20px;padding:2px 9px;}
         .tog{width:40px;height:22px;background:var(--hbg);border:1.5px solid var(--bd);border-radius:20px;
@@ -110,11 +114,21 @@
     <div class="page">
         <header class="hdr">
             <div class="hdr-left">
-                <h1>🎬 Tool Hub</h1>
+                <h1>
+                    <svg class="icon-title" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="9" width="18" height="12" rx="2"/>
+                        <path d="M3 9 4.5 4h3L6 9zM9 9l1.5-5h3L12 9zM15 9l1.5-5h3L18 9z"/>
+                    </svg>
+                    Tool Hub
+                </h1>
                 <span class="htag">Maditor</span>
             </div>
             <button class="tog" id="themeToggle" type="button" aria-label="Đổi giao diện">
-                <span class="tog-t" id="togThumb">🌙</span>
+                <span class="tog-t" id="togThumb">
+                    <svg class="icon-toggle" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>
+                    </svg>
+                </span>
             </button>
         </header>
 
@@ -122,18 +136,34 @@
 
         <div class="cols">
             <div class="col">
-                <div class="col-hd" id="webHd">🌐 Website (0)</div>
+                <div class="col-hd" id="webHd">
+                    <svg class="icon-col" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="M3 12h18M12 3c2.5 2.5 3.8 6 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-6-3.8-9s1.3-6.5 3.8-9z"/>
+                    </svg>
+                    Website (<span id="webCount">0</span>)
+                </div>
                 <div class="chip-list" id="webList"></div>
             </div>
             <div class="col">
-                <div class="col-hd" id="dlHd">📦 CEP & Portable (0)</div>
+                <div class="col-hd" id="dlHd">
+                    <svg class="icon-col" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 21 7.5v9L12 21 3 16.5v-9z"/>
+                        <path d="M3 7.5 12 12l9-4.5M12 12v9"/>
+                    </svg>
+                    CEP &amp; Portable (<span id="dlCount">0</span>)
+                </div>
                 <div class="chip-list" id="dlList"></div>
             </div>
         </div>
     </div>
 
     <div class="warn">
-        ⚠️ <strong>Maditor không nhận Donate</strong> bằng bất kỳ hình thức nào. Cẩn thận đề phòng những hành vi dùng sản phẩm của Maditor để kêu gọi quyên góp hoặc Donate!!
+        <svg class="icon-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 22 20H2z"/>
+            <path d="M12 9v5M12 17h.01"/>
+        </svg>
+        <strong>Maditor không nhận Donate</strong> bằng bất kỳ hình thức nào. Cẩn thận đề phòng những hành vi dùng sản phẩm của Maditor để kêu gọi quyên góp hoặc Donate!!
     </div>
 </div>
 
@@ -196,8 +226,8 @@
         const webTools = toolPairs.map(p => p.web).filter(Boolean);
         const dlTools = toolPairs.map(p => p.download).filter(Boolean);
 
-        document.getElementById('webHd').textContent = `🌐 Website (${webTools.length})`;
-        document.getElementById('dlHd').textContent = `📦 CEP & Portable (${dlTools.length})`;
+        document.getElementById('webCount').textContent = webTools.length;
+        document.getElementById('dlCount').textContent = dlTools.length;
 
         document.getElementById('webList').innerHTML = webTools.map(t => buildChip(t, 'web')).join('');
         document.getElementById('dlList').innerHTML = dlTools.map(t => buildChip(t, 'download')).join('');
@@ -205,7 +235,7 @@
 
     function showFallbackNotice() {
         document.getElementById('fallbackSlot').innerHTML =
-            '<div class="fallback-notice">⚠️ Không tải được <code>data.json</code> — đang hiển thị dữ liệu dự phòng. Hãy mở trang qua server/GitHub Pages thay vì mở file trực tiếp.</div>';
+            '<div class="fallback-notice"><svg class="icon-warn" style="color:#5c4a10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 20H2z"/><path d="M12 9v5M12 17h.01"/></svg> Không tải được <code>data.json</code> — đang hiển thị dữ liệu dự phòng. Hãy mở trang qua server/GitHub Pages thay vì mở file trực tiếp.</div>';
     }
 
     // Không lưu gì vào localStorage/sessionStorage — luôn chỉ dùng data.json,
@@ -213,12 +243,14 @@
     try { localStorage.clear(); sessionStorage.clear(); } catch (e) {}
 
     // ----- CÔNG TẮC DARK MODE -----
+    const MOON_SVG = '<svg class="icon-toggle" viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>';
+    const SUN_SVG = '<svg class="icon-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></svg>';
     const rootEl = document.getElementById('root');
     const themeToggle = document.getElementById('themeToggle');
     const togThumb = document.getElementById('togThumb');
     themeToggle.addEventListener('click', () => {
         const isDark = rootEl.classList.toggle('dk');
-        togThumb.textContent = isDark ? '☀' : '🌙';
+        togThumb.innerHTML = isDark ? SUN_SVG : MOON_SVG;
         themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
     });
 
