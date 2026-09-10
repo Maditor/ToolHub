@@ -9,7 +9,7 @@
     <title>Tool Hub · Maditor</title>
 
     <!-- FAVICON (biểu tượng tab) -->
-    <link rel="icon" type="image/svg+xml" href="tool-hub-icon.svg" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23f7b2c1'/><text x='50' y='70' font-size='65' font-family='Arial' text-anchor='middle' fill='%232d1b1b' font-weight='bold'>M</text></svg>" />
 
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
@@ -167,6 +167,26 @@
             50%      { transform: translateY(-9px) rotate(10deg); opacity: 1; }
         }
 
+        /* ----- BANNER KHI PHẢI DÙNG DỮ LIỆU DỰ PHÒNG ----- */
+        .fallback-notice {
+            position: relative;
+            z-index: 2;
+            background: #fff3cd;
+            border: 2px solid #8a6d1f;
+            color: #5c4a10;
+            font-weight: 700;
+            font-size: 0.82rem;
+            border-radius: 16px;
+            padding: 8px 14px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .fallback-notice code {
+            background: rgba(0,0,0,0.08);
+            padding: 1px 5px;
+            border-radius: 6px;
+        }
+
         /* ----- HEADER ----- */
         .header {
             display: flex;
@@ -277,6 +297,7 @@
         }
 
         .column {
+            position: relative;
             flex: 1;
             background: var(--column-bg);
             border-radius: 28px;
@@ -288,6 +309,43 @@
             transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
         .download-column { animation-delay: 0.28s; }
+
+        /* Khi danh sách dài hơn khung, mờ dần cạnh dưới + hiện gợi ý cuộn */
+        .column.is-scrollable::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 14px;
+            height: 28px;
+            background: linear-gradient(to bottom, transparent, var(--column-bg) 88%);
+            border-radius: 0 0 20px 20px;
+            pointer-events: none;
+            transition: background 0.4s ease;
+        }
+
+        .scroll-hint {
+            display: none;
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--status-text);
+            animation: hintBounce 1.4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+            letter-spacing: 0.3px;
+        }
+        .column.is-scrollable .scroll-hint {
+            display: block;
+        }
+
+        @keyframes hintBounce {
+            0%, 100% { transform: translate(-50%, 0); opacity: 0.85; }
+            50%      { transform: translate(-50%, 4px); opacity: 1; }
+        }
 
         @keyframes colEnter {
             0%   { opacity: 0; transform: translateY(18px) scale(0.96); }
@@ -311,6 +369,27 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 4px;
+            padding-bottom: 6px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--column-shadow) transparent;
+        }
+
+        .item-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        .item-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .item-list::-webkit-scrollbar-thumb {
+            background: var(--column-shadow);
+            border-radius: 20px;
+            border: 2px solid var(--column-bg);
+        }
+        .item-list::-webkit-scrollbar-thumb:hover {
+            background: var(--item-hover-shadow);
         }
 
         .item {
@@ -565,10 +644,12 @@
         <div class="column web-column">
             <h2>🌐 Website</h2>
             <div id="webList" class="item-list"></div>
+            <span class="scroll-hint">▾ cuộn thêm</span>
         </div>
         <div class="column download-column">
             <h2>📦 CEP and Portable</h2>
             <div id="downloadList" class="item-list"></div>
+            <span class="scroll-hint">▾ cuộn thêm</span>
         </div>
     </div>
 
@@ -606,18 +687,29 @@
     // một server thật thì data.json bên ngoài sẽ luôn được ưu tiên dùng.
     const fallbackData = [
         {
-            web: { name: "VisionBox-Web", url: "https://maditor.github.io/visionbox-web/", detail: "" },
-            download: { name: "VisionBox", url: "https://github.com/Maditor/VisionBox/releases/download/V1.4/VisionBox.V1.4.zip", detail: "" }
+            web: { name: "VisionBox-Web", url: "https://maditor.github.io/visionbox-web/", detail: "https://github.com/Maditor/visionbox-web" },
+            download: { name: "VisionBox", url: "https://github.com/Maditor/VisionBox/releases", detail: "https://github.com/Maditor/VisionBox" }
         },
         {
-            web: { name: "Webtool", url: "https://maditor.github.io/Webtool/", detail: "" },
-            download: { name: "TypoCore", url: "https://github.com/Maditor/TypoCore/releases/download/V1.3.1/TypoCorev1.3.1.Fix.Bug.zip", detail: "" }
+            web: { name: "Webtool", url: "https://maditor.github.io/WebTool/", detail: "https://github.com/Maditor/Webtool" },
+            download: { name: "TypoCore", url: "https://github.com/Maditor/TypoCore/releases", detail: "https://github.com/Maditor/TypoCore" }
         },
         {
-            web: { name: "Typoon (Đang phát triển)", url: "https://maditor.github.io/Typoon-web/", detail: "" },
-            download: { name: "TypoVision", url: "https://github.com/Maditor/TypoVision/releases/download/V1.0/TypoVision.zip", detail: "" }
+            web: { name: "Bubble Maker", url: "https://maditor.github.io/bubble-maker/", detail: "https://github.com/Maditor/bubble-maker" },
+            download: { name: "TypoVision", url: "https://github.com/Maditor/TypoVision/releases", detail: "https://github.com/Maditor/TypoVision" }
+        },
+        {
+            web: { name: "Panelo-Web", url: "https://maditor.github.io/Panelo-web/", detail: "https://github.com/Maditor/Panelo-web" },
+            download: { name: "Panelo", url: "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip", detail: "https://github.com/Maditor/Panelo-Portable" }
         }
     ];
+
+    function showFallbackNotice() {
+        const notice = document.createElement('div');
+        notice.className = 'fallback-notice';
+        notice.innerHTML = '⚠️ Không tải được <code>data.json</code> — đang hiển thị dữ liệu dự phòng (có thể thiếu tool mới nhất). Hãy mở trang qua server/GitHub Pages thay vì mở file trực tiếp.';
+        document.querySelector('.container').prepend(notice);
+    }
 
     function buildActions({ detailUrl, mainUrl, mainLabel, mainClass }) {
         const hasDetail = !!(detailUrl && detailUrl.trim());
@@ -692,6 +784,28 @@
         themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
     });
 
+    // ----- GỢI Ý CUỘN CHO TỪNG CỘT -----
+    // Kiểm tra xem danh sách có bị tràn khỏi khung không, nếu có thì hiện
+    // viền mờ + chữ "cuộn thêm"; khi cuộn tới đáy thì tự ẩn đi.
+    function updateScrollHint(list) {
+        const col = list.closest('.column');
+        if (!col) return;
+        const overflowing = list.scrollHeight > list.clientHeight + 2;
+        const nearBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 4;
+        col.classList.toggle('is-scrollable', overflowing && !nearBottom);
+    }
+
+    function initScrollHints() {
+        document.querySelectorAll('.item-list').forEach(list => {
+            updateScrollHint(list);
+            list.addEventListener('scroll', () => updateScrollHint(list));
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        document.querySelectorAll('.item-list').forEach(updateScrollHint);
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         // Gắn thêm timestamp để "phá cache" — buộc trình duyệt/CDN của GitHub
         // Pages phải coi đây là một URL khác mỗi lần tải và luôn lấy bản mới
@@ -702,11 +816,17 @@
                 if (!res.ok) throw new Error('Không đọc được data.json');
                 return res.json();
             })
-            .then(toolsData => renderColumns(toolsData))
-            .catch(() => {
-                // Không fetch được (thường do mở file trực tiếp bằng file://).
-                // Dùng dữ liệu dự phòng để trang vẫn hoạt động bình thường.
+            .then(toolsData => {
+                renderColumns(toolsData);
+                initScrollHints();
+            })
+            .catch((err) => {
+                // Không fetch được (thường do mở file trực tiếp bằng file://,
+                // hoặc data.json bị lỗi cú pháp / sai đường dẫn).
+                console.error('[ToolHub] Không tải được data.json, dùng dữ liệu dự phòng:', err);
                 renderColumns(fallbackData);
+                initScrollHints();
+                showFallbackNotice();
             });
     });
 </script>
