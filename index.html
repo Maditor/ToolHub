@@ -19,7 +19,7 @@
           --bg:#f5f0f2;--surf:#fff;--bd:#e0cdd5;--tx:#2d1b1b;--mu:#9a6b7a;
           --hbg:#f7b2c1;--htx:#2d1b1b;--div:#e0cdd5;
           --chip:#fff;--chip-h:#fdf0f3;
-          --db:#dbeeff;--gb:#c9ebd0;--lb:#fce4ea;
+          --db:#dbeeff;--gb:#c9ebd0;--lb:#fce4ea;--pb:#e6e0fc;
           --cbbd:#c0a0b0;--cbtx:#2d1b1b;
           --wbg:#fff8e1;--wbd:#e8c441;--wtx:#5c4a10;
           font-family:'Quicksand',sans-serif;
@@ -33,11 +33,11 @@
           --bg:#111019;--surf:#1a1726;--bd:#2e2a40;--tx:#e4dff0;--mu:#7a7090;
           --hbg:#25203a;--htx:#e4dff0;--div:#2e2a40;
           --chip:#1a1726;--chip-h:#201c30;
-          --db:#1a2a38;--gb:#182820;--lb:#281828;
+          --db:#1a2a38;--gb:#182820;--lb:#281828;--pb:#221e38;
           --cbbd:#4a4265;--cbtx:#c8c0e0;
           --wbg:#181610;--wbd:#5c4c10;--wtx:#c8b840;
         }
-        .page{width:100%;max-width:820px;display:flex;flex-direction:column;gap:14px;padding-bottom:64px;}
+        .page{width:100%;max-width:980px;display:flex;flex-direction:column;gap:14px;padding-bottom:64px;}
 
         /* header */
         .hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;}
@@ -56,7 +56,7 @@
         .dk .tog-t{transform:translateX(18px);}
 
         /* columns */
-        .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .cols{display:grid;grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));gap:12px;}
         .col{background:var(--surf);border:1.5px solid var(--bd);border-radius:10px;overflow:hidden;transition:background .3s,border-color .3s;}
         .col-hd{background:var(--hbg);color:var(--htx);font-family:'Fredoka One',cursive;font-size:.9rem;
           padding:7px 12px;letter-spacing:.3px;border-bottom:1px solid var(--div);transition:background .3s,border-color .3s;}
@@ -83,6 +83,7 @@
         .cbtn-detail{background:var(--db);}
         .cbtn-go{background:var(--gb);}
         .cbtn-dl{background:var(--lb);}
+        .cbtn-pt{background:var(--pb);}
 
         /* warn — thanh cố định dính đáy màn hình */
         .warn{
@@ -146,14 +147,24 @@
                 <div class="chip-list" id="webList"></div>
             </div>
             <div class="col">
-                <div class="col-hd" id="dlHd">
+                <div class="col-hd" id="cepHd">
                     <svg class="icon-col" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 3 21 7.5v9L12 21 3 16.5v-9z"/>
-                        <path d="M3 7.5 12 12l9-4.5M12 12v9"/>
+                        <path d="M9 2v4M15 2v4M7 8h10v4a5 5 0 0 1-5 5 5 5 0 0 1-5-5V8zM12 17v5"/>
                     </svg>
-                    CEP &amp; Portable (<span id="dlCount">0</span>)
+                    CEP (<span id="cepCount">0</span>)
                 </div>
-                <div class="chip-list" id="dlList"></div>
+                <div class="chip-list" id="cepList"></div>
+            </div>
+            <div class="col">
+                <div class="col-hd" id="ptHd">
+                    <svg class="icon-col" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="7" y="2" width="4" height="6" rx="1"/>
+                        <path d="M9 8v4"/>
+                        <rect x="5" y="12" width="8" height="10" rx="2"/>
+                    </svg>
+                    Portable (<span id="ptCount">0</span>)
+                </div>
+                <div class="chip-list" id="ptList"></div>
             </div>
         </div>
     </div>
@@ -174,63 +185,72 @@
     //  với file index.html này). Muốn thêm/sửa công cụ, chỉ cần mở
     //  data.json và chỉnh sửa — KHÔNG cần đụng vào file HTML này.
     //
-    //  Cấu trúc mỗi phần tử trong data.json:
+    //  data.json có 3 mảng ĐỘC LẬP hoàn toàn với nhau:
     //  {
-    //    "web": { "name": "Tên hiển thị", "url": "link web", "detail": "link giới thiệu" },
-    //    "download": { "name": "Tên hiển thị", "url": "link tải", "detail": "link giới thiệu" }
+    //    "web":      [ { "name": "...", "url": "...", "detail": "..." }, ... ],
+    //    "cep":      [ { "name": "...", "url": "...", "detail": "..." }, ... ],
+    //    "portable": [ { "name": "...", "url": "...", "detail": "..." }, ... ]
     //  }
+    //
+    //  - Muốn thêm 1 tool Website: thêm 1 object vào cuối mảng "web".
+    //  - Muốn thêm 1 CEP panel: thêm 1 object vào cuối mảng "cep".
+    //  - Muốn thêm 1 app Portable: thêm 1 object vào cuối mảng "portable".
+    //  - 3 mảng không cần bằng số lượng, không cần khớp theo thứ tự,
+    //    thêm bên nào chỉ sửa đúng mảng đó.
     //  - Để trống "detail": "" nếu chưa có trang thông tin (nút Detail sẽ tự mờ đi).
-    //  - Nếu một bên không có, thay cả object bằng null: "web": null
-    //  - Muốn thêm công cụ mới: copy 1 khối { web: {...}, download: {...} } và dán thêm
-    //    vào cuối mảng trong data.json, nhớ thêm dấu phẩy ngăn cách.
     // ================================================================
 
-    const fallbackData = [
-        {
-            web: { name: "VisionBox-Web", url: "https://maditor.github.io/visionbox-web/", detail: "https://github.com/Maditor/visionbox-web" },
-            download: { name: "VisionBox", url: "https://github.com/Maditor/VisionBox/releases", detail: "https://github.com/Maditor/VisionBox" }
-        },
-        {
-            web: { name: "Webtool", url: "https://maditor.github.io/WebTool/", detail: "https://github.com/Maditor/Webtool" },
-            download: { name: "TypoCore", url: "https://github.com/Maditor/TypoCore/releases", detail: "https://github.com/Maditor/TypoCore" }
-        },
-        {
-            web: { name: "Bubble Maker", url: "https://maditor.github.io/bubble-maker/", detail: "https://github.com/Maditor/bubble-maker" },
-            download: { name: "TypoVision", url: "https://github.com/Maditor/TypoVision/releases", detail: "https://github.com/Maditor/TypoVision" }
-        },
-        {
-            web: { name: "Panelo-Web", url: "https://maditor.github.io/Panelo-web/", detail: "https://github.com/Maditor/Panelo-web" },
-            download: { name: "Panelo", url: "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip", detail: "https://github.com/Maditor/Panelo-Portable" }
-        }
-    ];
+    const fallbackData = {
+        web: [
+            { name: "VisionBox-Web", url: "https://maditor.github.io/visionbox-web/", detail: "https://github.com/Maditor/visionbox-web" },
+            { name: "Webtool", url: "https://maditor.github.io/WebTool/", detail: "https://github.com/Maditor/Webtool" },
+            { name: "Bubble Maker", url: "https://maditor.github.io/bubble-maker/", detail: "https://github.com/Maditor/bubble-maker" },
+            { name: "Panelo-Web", url: "https://maditor.github.io/Panelo-web/", detail: "https://github.com/Maditor/Panelo-web" }
+        ],
+        cep: [
+            { name: "TypoCore", url: "https://github.com/Maditor/TypoCore/releases", detail: "https://github.com/Maditor/TypoCore" },
+            { name: "TypoVision", url: "https://github.com/Maditor/TypoVision/releases", detail: "https://github.com/Maditor/TypoVision" }
+        ],
+        portable: [
+            { name: "VisionBox", url: "https://github.com/Maditor/VisionBox/releases", detail: "https://github.com/Maditor/VisionBox" },
+            { name: "Panelo", url: "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip", detail: "https://github.com/Maditor/Panelo-Portable" }
+        ]
+    };
 
     function buildChip(tool, type) {
         const hasDetail = !!(tool.detail && tool.detail.trim());
         const detailBtn = hasDetail
             ? `<a href="${tool.detail}" target="_blank" rel="noreferrer" class="cbtn cbtn-detail">Detail</a>`
             : `<span class="cbtn cbtn-detail disabled">Detail</span>`;
-        const mainClass = type === 'web' ? 'cbtn-go' : 'cbtn-dl';
-        const mainLabel = type === 'web' ? 'Open' : 'Get';
+        const variants = {
+            web:      { cls: 'cbtn-go', label: 'Open' },
+            cep:      { cls: 'cbtn-dl', label: 'Get' },
+            portable: { cls: 'cbtn-pt', label: 'Get' }
+        };
+        const v = variants[type] || variants.portable;
         return `
             <div class="chip">
                 <span class="chip-name">${tool.name}</span>
                 <div class="chip-btns">
                     ${detailBtn}
-                    <a href="${tool.url}" target="_blank" rel="noreferrer" class="cbtn ${mainClass}">${mainLabel}</a>
+                    <a href="${tool.url}" target="_blank" rel="noreferrer" class="cbtn ${v.cls}">${v.label}</a>
                 </div>
             </div>
         `;
     }
 
-    function renderTools(toolPairs) {
-        const webTools = toolPairs.map(p => p.web).filter(Boolean);
-        const dlTools = toolPairs.map(p => p.download).filter(Boolean);
+    function renderTools(data) {
+        const webTools = Array.isArray(data.web) ? data.web : [];
+        const cepTools = Array.isArray(data.cep) ? data.cep : [];
+        const ptTools = Array.isArray(data.portable) ? data.portable : [];
 
         document.getElementById('webCount').textContent = webTools.length;
-        document.getElementById('dlCount').textContent = dlTools.length;
+        document.getElementById('cepCount').textContent = cepTools.length;
+        document.getElementById('ptCount').textContent = ptTools.length;
 
         document.getElementById('webList').innerHTML = webTools.map(t => buildChip(t, 'web')).join('');
-        document.getElementById('dlList').innerHTML = dlTools.map(t => buildChip(t, 'download')).join('');
+        document.getElementById('cepList').innerHTML = cepTools.map(t => buildChip(t, 'cep')).join('');
+        document.getElementById('ptList').innerHTML = ptTools.map(t => buildChip(t, 'portable')).join('');
     }
 
     function showFallbackNotice() {
