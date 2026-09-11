@@ -31,20 +31,7 @@
       "name": "TypoVision",
       "url": "https://github.com/Maditor/TypoVision/releases",
       "detail": "https://github.com/Maditor/TypoVision"
-    },
-    {
-      "name": "TypoBlend",
-      "url": "https://github.com/Maditor/TypoBlend/releases",
-      "detail": "https://github.com/Maditor/TypoBlend"
-    },
-    {
-      "name": "imaFlow",
-      "url": "https://github.com/Maditor/imaFlow/releases",
-      "detail": "https://github.com/Maditor/imaFlow"
     }
-
-
-
   ],
   "portable": [
     {
@@ -58,7 +45,4 @@
       "detail": "https://github.com/Maditor/Panelo-Portable"
     }
   ]
-
-
-1
 }
