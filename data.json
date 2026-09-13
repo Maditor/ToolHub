@@ -53,6 +53,11 @@
       "name": "Panelo",
       "url": "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip",
       "detail": "https://github.com/Maditor/Panelo-Portable"
+    },
+        {
+      "name": "TypoCOM",
+      "url": "https://github.com/Maditor/TypoCOM/releases",
+      "detail": "https://github.com/Maditor/TypoCOM"
     }
   ]
 }
