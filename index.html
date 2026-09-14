@@ -22,6 +22,7 @@
           --db:#dbeeff;--gb:#c9ebd0;--lb:#fce4ea;--pb:#e6e0fc;
           --cbbd:#c0a0b0;--cbtx:#2d1b1b;
           --wbg:#fff8e1;--wbd:#e8c441;--wtx:#5c4a10;
+          --dc-bg:#e2e5fd;--dc-tx:#4752c4;--dc-bd:#c6cbfa;
           font-family:'Quicksand',sans-serif;
           min-height:100vh;
           background:var(--bg);
@@ -36,6 +37,7 @@
           --db:#1a2a38;--gb:#182820;--lb:#281828;--pb:#221e38;
           --cbbd:#4a4265;--cbtx:#c8c0e0;
           --wbg:#181610;--wbd:#5c4c10;--wtx:#c8b840;
+          --dc-bg:#252a4a;--dc-tx:#b7bfff;--dc-bd:#3b3f70;
         }
         .page{width:100%;max-width:980px;display:flex;flex-direction:column;gap:14px;padding-bottom:64px;}
 
@@ -47,7 +49,19 @@
         .icon-warn{width:16px;height:16px;flex-shrink:0;vertical-align:-3px;margin-right:3px;color:var(--wtx);}
         .icon-toggle{width:11px;height:11px;color:var(--surf);}
         .hdr-left{display:flex;align-items:center;gap:8px;}
+        .hdr-right{display:flex;align-items:center;gap:10px;}
         .htag{font-size:.7rem;font-weight:700;color:var(--mu);border:1px solid var(--bd);border-radius:20px;padding:2px 9px;}
+        .discord-btn{
+          display:flex;align-items:center;gap:6px;
+          background:var(--dc-bg);color:var(--dc-tx);
+          border:1.5px solid var(--dc-bd);border-radius:20px;
+          padding:4px 12px;font-family:'Quicksand',sans-serif;font-size:.75rem;font-weight:700;
+          text-decoration:none;cursor:pointer;flex-shrink:0;
+          transition:transform .15s ease,opacity .15s ease,background .3s ease,color .3s ease,border-color .3s ease;
+        }
+        .discord-btn:hover{opacity:.82;transform:translateY(-1px);}
+        .discord-btn:active{transform:translateY(0);opacity:.7;}
+        .icon-discord{width:15px;height:15px;flex-shrink:0;}
         .tog{width:40px;height:22px;background:var(--hbg);border:1.5px solid var(--bd);border-radius:20px;
           cursor:pointer;position:relative;flex-shrink:0;transition:background .3s,border-color .3s;}
         .tog-t{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
@@ -101,6 +115,11 @@
           font-weight:700;font-size:.72rem;border-radius:8px;padding:6px 12px;text-align:center;
         }
 
+        @media(max-width:460px){
+          .discord-btn-label{display:none;}
+          .discord-btn{padding:5px 8px;}
+        }
+
         @media(max-width:500px){
           .cols{grid-template-columns:1fr;}
           .chip-name{font-size:.75rem;}
@@ -124,13 +143,21 @@
                 </h1>
                 <span class="htag">Maditor</span>
             </div>
-            <button class="tog" id="themeToggle" type="button" aria-label="Đổi giao diện">
-                <span class="tog-t" id="togThumb">
-                    <svg class="icon-toggle" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>
+            <div class="hdr-right">
+                <a class="discord-btn" href="https://discord.gg/WAKjsENyMB" target="_blank" rel="noreferrer" aria-label="Tham gia nhóm Discord">
+                    <svg class="icon-discord" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.522 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286ZM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.955 2.4189-2.1568 2.4189Zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9459 2.4189-2.1568 2.4189Z"/>
                     </svg>
-                </span>
-            </button>
+                    <span class="discord-btn-label">Tham gia nhóm</span>
+                </a>
+                <button class="tog" id="themeToggle" type="button" aria-label="Đổi giao diện">
+                    <span class="tog-t" id="togThumb">
+                        <svg class="icon-toggle" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>
+                        </svg>
+                    </span>
+                </button>
+            </div>
         </header>
 
         <div id="fallbackSlot"></div>
@@ -174,7 +201,7 @@
             <path d="M12 3 22 20H2z"/>
             <path d="M12 9v5M12 17h.01"/>
         </svg>
-        <strong>Maditor không nhận Donate</strong> bằng bất kỳ hình thức nào. Những hành vi dùng sản phẩm của Maditor kêu gọi Donate đều là lừa đảo!!!
+        <strong>Maditor không nhận Donate</strong> bằng bất kỳ hình thức nào. Cẩn thận đề phòng những hành vi dùng sản phẩm của Maditor để kêu gọi quyên góp hoặc Donate!!
     </div>
 </div>
 
