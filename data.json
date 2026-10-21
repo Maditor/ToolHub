@@ -45,11 +45,6 @@
   ],
   "portable": [
     {
-      "name": "VisionBox",
-      "url": "https://github.com/Maditor/VisionBox/releases",
-      "detail": "https://github.com/Maditor/VisionBox"
-    },
-    {
       "name": "Panelo",
       "url": "https://github.com/Maditor/Panelo-Portable/archive/refs/heads/main.zip",
       "detail": "https://github.com/Maditor/Panelo-Portable"
@@ -58,6 +53,22 @@
       "name": "TypoCOM",
       "url": "https://github.com/Maditor/TypoCOM/releases",
       "detail": "https://github.com/Maditor/TypoCOM"
+    },
+    {
+      "name": "LazyK",
+      "url": "https://github.com/Maditor/LazyK/releases",
+      "detail": "https://github.com/Maditor/LazyK"
+    },
+    {
+      "name": "Japo",
+      "url": "",
+      "detail": "https://github.com/Maditor/Japo"
+    },
+    {
+      "name": "FreeSub",
+      "url": "https://github.com/Maditor/FreeSub/releases",
+      "detail": "https://github.com/Maditor/FreeSub"
     }
+    
   ]
 }
